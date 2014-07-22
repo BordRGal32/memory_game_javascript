@@ -34,3 +34,41 @@ describe("Space", function() {
         })
     })
 })
+
+
+describe("Board", function(){
+    describe("create", function() {
+        it("creates an instance of Baord", function() {
+            var testBoard = Board.create(10);
+            Board.isPrototypeOf(testBoard).should.equal(true);
+        })
+    })
+    describe("initialize", function(){
+        it("initializes the attributes of Board", function() {
+            var testBoard = Object.create(Board);
+            testBoard.initialize(10);
+            testBoard.spaces.should.eql([])
+            testBoard.dimension.should.equal(10)
+            testBoard.spaceNumber.should.equal(100)
+        })
+    })
+   describe("buildSpaces", function() {
+        it("populates a board with spaces", function() {
+            var testBoard = Board.create(2)
+            testBoard.buildSpaces();
+            testBoard.spaces[0].spaceId.should.equal(1)
+            testBoard.spaces[0].spaceValue.should.equal('A')
+            testBoard.spaces[1].spaceValue.should.equal('A')
+            testBoard.spaces[1].spaceId.should.equal(2)
+            testBoard.spaces.length.should.equal(4)
+        })
+    })
+    describe("shuffleSpaces", function() {
+        it("shuffles the spaces array", function() {
+            var testBoard = Board.create(10)
+            testBoard.buildSpaces();
+            testBoard.shuffleSpaces();
+            testBoard.spaces.length.should.equal(100)
+        })
+    })
+})
