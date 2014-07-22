@@ -67,3 +67,88 @@ var Board = {
         }
     }
 }
+
+
+var Game = {
+    initialize: function(dimension, player1, player2) {
+        this.playerOne = player1;
+        this.playerTwo = player2;
+        this.winner = " "
+
+    },
+
+    create: function(dimension, player1, player2){
+        var game = Object.create(Game)
+        game.initialize(dimension, player1, player2)
+        game.board = Board.create(dimension)
+        game.board.buildSpaces();
+        game.board.shuffleSpaces();
+        game.whoseTurn = game.whoStarts();
+        return game;
+    },
+
+     whoStarts: function(){
+        if (Math.round(Math.random()) === 1) {
+            this.whoseTurn = this.playerOne;
+        } else {
+            this.whoseTurn = this.playerTwo;
+        }
+    },
+
+    switchTurn: function() {
+        if(this.whoseTurn = this.playerOne) {
+            this.whoseTurn = this.playerTwo;
+        } else {
+            this.whoseTurn = this.playerOne;
+        }
+    },
+
+    isMatch: function(card1, card2) {
+        var match = false;
+        var card1 = Space.find(card1);
+        var card2 = Space.find(card2);
+        if (card1.spaceValue === card2.spaceValue) {
+            match = true
+            card1.matched(this.whoseTurn)
+            card2.matched(this.whoseTurn)
+        } else {
+            this.switchTurn;
+        }
+        return match;
+    },
+
+    allSpacesOwned: function() {
+        var emptySpace = true
+        var playerOneCount = 0;
+        var playerTwoCount = 0;
+        var pOne = this.playerOne
+        var pTwo = this.playerTwo
+        Space.all.forEach(function(space){
+            if( space.owned === " ") {
+                emptySpace = false;
+                return emptySpace;
+            } else if( space.owned === pOne) {
+                playerOneCount += 1;
+            } else {
+                playerTwoCount += 1;
+            }
+        })
+        this.setWinner(playerOneCount, playerTwoCount);
+        return emptySpace
+
+    },
+
+     setWinner: function(playerOneCount, playerTwoCount) {
+        var temp = " "
+        if(playerOneCount > playerTwoCount) {
+            this.winner = this.playerOne;
+            temp = this.playerOne
+        } else if( playerTwoCount > playerOneCount) {
+            this.winner = this.playerTwo;
+            temp = this.playerTwo;
+        } else {
+            this.winner = "Cats Game";
+        }
+    }
+}
+

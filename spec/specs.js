@@ -72,3 +72,59 @@ describe("Board", function(){
         })
     })
 })
+
+describe("Game", function() {
+    describe("Create", function() {
+        it("creates an instance of Game", function() {
+            var testGame = Game.create(10, "Tanya", "Jack");
+            Game.isPrototypeOf(testGame).should.equal(true)
+        })
+    })
+    describe("switchTurn", function() {
+        it("changes the current player", function() {
+            var testGame = Game.create(10, "Tanya", "Jack");
+            testGame.whoseTurn = "Tanya";
+            testGame.switchTurn();
+            testGame.whoseTurn.should.equal("Jack")
+        })
+    })
+    describe("isMatch", function() {
+        it("determines if two cards have the same value and marks space", function(){
+            var testGame = Object.create(Game);
+            testGame.board = Board.create(10);
+            testGame.board.buildSpaces();
+            testGame.player1 = "Tanya";
+            testGame.player2 = "Steve";
+            testGame.whoseTurn = "Tanya";
+            testGame.isMatch(1,2).should.equal(true)
+            testGame.isMatch(1,4).should.equal(false)
+            Space.all[0].owned.should.equal("Tanya")
+            Space.all[2].owned.should.equal(" ")
+        })
+    })
+    describe("allSpacesOwned", function() {
+        it("returns false if there is an unmatched space", function () {
+            var testGame = Game.create(2, "Tanya", "Steve");
+            testGame.allSpacesOwned().should.equal(false)
+        })
+        it("returns true and sets Game.winner playerName when game is won", function(){
+            var testGame = Game.create(2, 'Tanya', 'Steve');
+            Space.all[0].matched('Tanya');
+            Space.all[1].matched('Tanya');
+            Space.all[2].matched('Tanya');
+            Space.all[3].matched('Tanya');
+            testGame.allSpacesOwned().should.equal(true)
+            testGame.winner.should.equal("Tanya")
+        })
+        it("return returns true and sets Game.winner to cats game when game is tied", function() {
+             var testGame = Game.create(2, 'Tanya', 'Steve');
+            Space.all[0].matched('Tanya');
+            Space.all[1].matched('Tanya');
+            Space.all[2].matched('Steve');
+            Space.all[3].matched('Steve');
+            testGame.allSpacesOwned().should.equal(true)
+            testGame.winner.should.equal("Cats Game")
+
+        })
+    })
+})
