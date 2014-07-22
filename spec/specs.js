@@ -102,6 +102,16 @@ describe("Game", function() {
             Space.all[2].owned.should.equal(" ")
         })
     })
+
+    describe("whoStarts", function() {
+        it("lets a player go first", function () {
+            var testGame = Object.create(Game);
+            testGame.initialize(2, "Tanya", "Steve");
+            testGame.whoStarts();
+            testGame.whoseTurn.should.not.equal(" ")
+
+        })
+    })
     describe("allSpacesOwned", function() {
         it("returns false if there is an unmatched space", function () {
             var testGame = Game.create(2, "Tanya", "Steve");

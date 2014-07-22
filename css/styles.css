@@ -1,0 +1,45 @@
+form#new-game-form {
+    display: none;
+}
+
+button#end-game {
+    display: none;
+}
+
+#game-between {
+    display: none;
+}
+
+#current-player {
+    display: none;
+}
+
+button {
+    margin: 10px;
+}
+
+.card-back {
+    background-color: #F0FFFF;
+}
+
+table {
+    border: 1px solid black;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+td {
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+}
+
+.green {
+    background-color: #395D33;
+    background-opacity: 0.5;
+}
+
+.purple {
+    background-color: #4B0082;
+    opacity: 0.5;
+}
