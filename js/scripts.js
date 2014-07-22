@@ -43,7 +43,6 @@ var Board = {
         return board;
     },
 
-
     buildSpaces: function() {
         var alphabeticValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                                 'N','O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z', '!', '@', '#', '$', '%', '^', '&', '*', '()']
@@ -160,7 +159,6 @@ $(document).ready(function() {
         $("button#new-game-button").hide();
         $("form#new-game-form").show();
         $("#game-between").show();
-
     });
 
     $("form#new-game-form").submit(function(event) {
@@ -206,7 +204,6 @@ $(document).ready(function() {
                 $(tempCard).addClass('card-back').delay(100);
                 console.log("NO MATCH:" + currentGame.whoseTurn)
                 currentGame.switchTurn();
-
             }
         tempSpace = "empty"
         }
