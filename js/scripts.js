@@ -191,7 +191,6 @@ $(document).ready(function() {
                 var id = currentGame.board.spaces[(i*dimension) + j].spaceId
                 var url = currentGame.board.spaces[(i*dimension) + j].url
                 $("tr").last().append("<td id = '" + id.toString() + "' class='card-back'></td>")
-                // $("table#game-board td").last().append('<img class="card-image '+ id.toString() +'" src="' + url + '" >')
                 $("table#game-board td").last().click(makeMove);
             }
         }
@@ -203,27 +202,20 @@ $(document).ready(function() {
         var spaceId = this.id
         var value = Space.find(parseInt(spaceId)).url;
         $(card).append("<img id='card-image' src= '"+ value +"' >");
+        $(card).attr('class', 'no-background')
         if(tempSpace === "empty" ) {
             tempSpace = spaceId
             tempCard = card
-            console.log("Empty:" + currentGame.whoseTurn)
         } else {
             if(currentGame.isMatch(parseInt(tempSpace), parseInt(spaceId))) {
                 $("h3#match").show(1).delay(3000).hide(1);
                 matchFound(card)
-                console.log("MATCH:" + currentGame.whoseTurn)
             } else {
                 $("h3#no-match").show(1).delay(3000).hide(1);
-
-                // wait($(card).flipCards(card), 2 );
                 flipCards(card);
-
-
-
-                console.log("NO MATCH:" + currentGame.whoseTurn)
                 currentGame.switchTurn();
-                $("#current-player").hide(1).delay(3000).show(1);
-                $("#current-player p").replaceWith("<p>"+ currentGame.whoseTurn + "</p>")
+                $("#player-name").hide(1).delay(3000).show(1);
+                $("#player-name p").replaceWith("<p>"+ currentGame.whoseTurn + "</p>")
             }
         tempSpace = "empty"
         }
@@ -234,31 +226,23 @@ $(document).ready(function() {
     function flipCards(card) {
          setTimeout(function() {
             $(card).text('')
+            $(card).attr('class', 'card-back')
             $(tempCard).text('')
+            $(tempCard).attr('class', 'card-back')
          }, 3000)
      }
 
     function matchFound(card) {
         $(card).off("click");
         $(tempCard).off("click");
-        // $(card).attr('id', 'complete')
-        // $(tempCard).attr('id', 'complete')
-        console.log(card.id)
-        console.log(tempCard.id)
-         if(currentGame.whoseTurn === currentGame.playerOne) {
-            $(card).addClass('green')
-            $(tempCard).addClass('green')
-        } else {
-            $(card).addClass('purple')
-            $(tempCard).addClass('purple')
-        }
-     tryForWinner();
+        tryForWinner();
     }
 
     function tryForWinner() {
         if(currentGame.allSpacesOwned()) {
-            $("#current-player").text(currentGame.winner + " WINS!")
-            console.log("WINNER" +currentGame.winner)
+            $("#current-player").hide();
+            $("#winner").show();
+            $("#winner").append(currentGame.whoseTurn + "\n WINS!")
         }
     }
 })

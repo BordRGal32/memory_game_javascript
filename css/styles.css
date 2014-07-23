@@ -16,16 +16,20 @@ button#end-game {
 
 h3#match {
     display: none;
+    text-align: center;
 
 }
 
 h3#no-match{
     display:none;
+    text-align: center;
 
 }
 
 #player-name {
     display:none;
+    color: #F2304A;
+    text-align: center;
 }
 
 button {
@@ -33,24 +37,20 @@ button {
 }
 
 .card-back {
-    background-color: #6D7B8D;
+    background-image: url('pattern8-pattern-76a.png');
+    background-size: cover;
 
 }
 body {
     color: #6699FF;;
     font-family: 'Rokkitt' serif;
     background-image: url("escheresque_ste_@2X.png");
-   /* background-repeat: no-repeat;*/
     background-attachment:fixed;
-/*    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;*/
-    /*background-size: cover;*/
 }
 
 table {
     position: center;
-    border: 1px solid black;
+    /*border: 11px solid #ACACAC;*/
     text-align: center;
     margin-bottom: 25px;
     margin-top: 100px;
@@ -61,38 +61,34 @@ table {
 td {
   height: 150px;
   width: 125px;
-  border: 10px solid white;
+  border: 10px solid #484848;
+  list-style-position: absolute;
 }
+
 #card-image {
-    /*display: none;*/
-    height: 120px;
-    width: 95px;
-   /* max-height:  150px;
-    max-width: 125px;*/
+    height: 125px;
+    width: 100px;
 }
 
-.green {
-    background-color: #C12869;
-    background-opacity: 0.5;
-}
-
-.purple {
-    background-color: #6960EC;
-    opacity: 0.5;
+.no-background {
+    background-color: #484848;
 }
 
 .match-header {
-    text-align: center;
     position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
 }
 
 p {
-    font-size: 25px;
+    font-size: 35px;
     font-style: bold;
 }
 
 h4 {
     font-size: 40px;
+    text-align: center;
 }
 
 h1 {
@@ -103,3 +99,9 @@ h1 {
     font-style: bold;
 
 }
+
+#winner {
+   color: #F2304A;
+   font-size: 75px;
+}
+
