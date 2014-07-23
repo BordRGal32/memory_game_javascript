@@ -3,6 +3,7 @@ var Space = {
 
     initialize: function(spaceId, spaceValue) {
         this.spaceId = spaceId;
+        this.url = spaceValue;
         this.spaceValue = spaceValue;
         this.owned = " ";
     },
@@ -44,8 +45,17 @@ var Board = {
     },
 
     buildSpaces: function() {
-        var alphabeticValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                                'N','O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z', '!', '@', '#', '$', '%', '^', '&', '*', '()']
+        // var alphabeticValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                                // 'N','O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z', '!', '@', '#', '$', '%', '^', '&', '*', '()']
+        var alphabeticValues = [ 'images/ballon.jpg', 'images/bird_tree.jpg','images/apple.jpg','images/birdcage.jpg',
+                                 'images/building.jpg', 'images/car.jpg', 'images/casino.jpg', 'images/city.jpg',
+                                 'images/house.jpg', 'images/lake.jpg', 'images/monkey.jpg', 'images/polar-bear.jpg',
+                                 'images/rainbow.jpg', 'images/tree.jpg', 'images/zebra.jpg', 'images/moon.jpg',
+                                 'images/smurfs.jpg', 'images/leaves.jpg', 'images/globe.jpg', 'images/mirror.jpg',
+                                 'images/butterfly.jpg', 'images/dragonfly.jpg', 'images/lavendar.jpg', 'images/field',
+                                 'images/railroad.jpg', 'images/waterfall.jpg', 'images/island.jpg',, 'images/water.jpg',
+                                 'images/ducati.jpg', 'images/beach.jpg', 'images/elephants.jpg', 'images/wolves.jpg',
+                                 'images/soccer.jpg', 'images/sunflower.jpg', 'images/kitten.jpg', 'images/clock.jpg']
         var valueIndex = 0
         for(var i = 1; i <= this.spaceNumber; i += 2) {
             this.spaces.push(Space.create(i, alphabeticValues[valueIndex]))
@@ -168,17 +178,20 @@ $(document).ready(function() {
         currentGame = Game.create(dimension, playerOne, playerTwo)
         currentGame.whoStarts();
         $("#current-player").show();
-        $("#current-player").append("<p>"+ currentGame.whoseTurn + "</p>")
+        $("#player-name").append("<p>"+ currentGame.whoseTurn + "</p>")
+        $("#player-name").show();
         $("form#new-game-form").hide();
         $("button#end-game").show();
-        $("#player1-name").append("<p> Green: "+playerOne+"</p>")
-        $("#player2-name").append("<p> Purple: "+playerTwo+"</p>")
-        $("button#end-game").show();
+        $("#player1-name").append("<p>"+playerOne+"</p>")
+        $("#player2-name").append("<p>"+playerTwo+"</p>")
+        $("button#end-game").show();2
         for (var i=0; i < (dimension); i ++) {
            $("table#game-board").append("<tr></tr>")
             for ( var j=0; j< (dimension); j++){
                 var id = currentGame.board.spaces[(i*dimension) + j].spaceId
+                var url = currentGame.board.spaces[(i*dimension) + j].url
                 $("tr").last().append("<td id = '" + id.toString() + "' class='card-back'></td>")
+                // $("table#game-board td").last().append('<img class="card-image '+ id.toString() +'" src="' + url + '" >')
                 $("table#game-board td").last().click(makeMove);
             }
         }
@@ -188,29 +201,50 @@ $(document).ready(function() {
     function makeMove() {
         var card = this
         var spaceId = this.id
-        var value = Space.find(parseInt(spaceId)).spaceValue
+        var value = Space.find(parseInt(spaceId)).url;
+        $(card).append("<img id='card-image' src= '"+ value +"' >");
         if(tempSpace === "empty" ) {
             tempSpace = spaceId
             tempCard = card
-            $(card).append(value)
             console.log("Empty:" + currentGame.whoseTurn)
         } else {
-            $(card).append(value)
             if(currentGame.isMatch(parseInt(tempSpace), parseInt(spaceId))) {
-                matchFound(card);
+                $("h3#match").show(1).delay(3000).hide(1);
+                matchFound(card)
                 console.log("MATCH:" + currentGame.whoseTurn)
             } else {
-                $(card).addClass('card-back').delay(100);
-                $(tempCard).addClass('card-back').delay(100);
+                $("h3#no-match").show(1).delay(3000).hide(1);
+
+                // wait($(card).flipCards(card), 2 );
+                flipCards(card);
+
+
+
                 console.log("NO MATCH:" + currentGame.whoseTurn)
                 currentGame.switchTurn();
+                $("#current-player").hide(1).delay(3000).show(1);
+                $("#current-player p").replaceWith("<p>"+ currentGame.whoseTurn + "</p>")
             }
         tempSpace = "empty"
         }
 
     }
 
+
+    function flipCards(card) {
+         setTimeout(function() {
+            $(card).text('')
+            $(tempCard).text('')
+         }, 3000)
+     }
+
     function matchFound(card) {
+        $(card).off("click");
+        $(tempCard).off("click");
+        // $(card).attr('id', 'complete')
+        // $(tempCard).attr('id', 'complete')
+        console.log(card.id)
+        console.log(tempCard.id)
          if(currentGame.whoseTurn === currentGame.playerOne) {
             $(card).addClass('green')
             $(tempCard).addClass('green')
@@ -223,7 +257,7 @@ $(document).ready(function() {
 
     function tryForWinner() {
         if(currentGame.allSpacesOwned()) {
-            $("#current-player").append(currentGame.winner)
+            $("#current-player").text(currentGame.winner + " WINS!")
             console.log("WINNER" +currentGame.winner)
         }
     }
