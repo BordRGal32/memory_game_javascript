@@ -190,6 +190,24 @@ $(document).ready(function() {
 
     });
 
+    $("button#end-game").click(function() {
+        currentGame = ''
+        $("table").text('');
+        $("table").hide();
+        $(".match-header").hide();
+        $("#winner").text('')
+        $("#current-player").hide();
+        // $("#current-player").text();
+        $(".players").hide();
+        $("#player1-name").empty();
+        $("#player2-name").empty();
+        $("#player-name").empty();
+        $("button#end-game").hide();
+        $("button#new-game-button").show();
+        $("#game-between").hide();
+        Space.all = [];
+    });
+
     $("form#new-game-form").submit(function(event) {
         var playerOne = $("input#player1").val();
         var playerTwo = $("input#player2").val();
@@ -204,14 +222,18 @@ $(document).ready(function() {
         $("button#end-game").show();
         $("#player1-name").append("<p>"+currentGame.playerOne+"</p>")
         $("#player2-name").append("<p>"+currentGame.playerTwo+"</p>")
-        $("button#end-game").show();2
+        $("#player1-matches").text("MATCHES:")
+        $("player2-matches").text("MATCHES:")
+        $("button#end-game").show();
+        $("table").show();
+        $(".match-header").show();
         for (var i=0; i < (2); i ++) {
-           $("table#game-board").append("<tr></tr>")
+           $("table").append("<tr></tr>")
             for ( var j=0; j< (2); j++){
                 var id = currentGame.board.spaces[(i*2) + j].spaceId
                 var url = currentGame.board.spaces[(i*2) + j].url
                 $("tr").last().append("<td id = '" + id.toString() + "' class='card-back'></td>")
-                $("table#game-board td").last().bind('click', makeMove);
+                $("table td").last().bind('click', makeMove);
             }
         }
         event.preventDefault();
@@ -220,15 +242,15 @@ $(document).ready(function() {
     function makeMove() {
         var spaceId = this.id
         if (this.id != 'owned') {
-            console.log(Space.find(parseInt(spaceId)))
             var card = this
             var value = Space.find(parseInt(spaceId)).url;
 
             $(card).append("<img id='card-image' src= '"+ value +"' >");
             $(card).attr('class', 'no-background')
             if(tempSpace === "empty" ) {
-                tempSpace = spaceId
-                tempCard = card
+                $(card).unbind("click");
+                tempSpace = spaceId;
+                tempCard = card;
             } else {
                 $("table#game-board td").unbind('click')
                 if(currentGame.isMatch(parseInt(tempSpace), parseInt(spaceId))) {
