@@ -80,8 +80,16 @@ var Board = {
 
 var Game = {
     initialize: function(dimension, player1, player2) {
-        this.playerOne = player1;
-        this.playerTwo = player2;
+        if(player1 === '') {
+             this.playerOne = 'PlayerOne'
+        } else {
+            this.playerOne = player1;
+        }
+        if(player2 === '') {
+            this.playerTwo = 'PlayerTwo'
+        } else {
+            this.playerTwo = player2
+        }
         this.winner = " "
         this.whoseTurn = " "
 
@@ -124,6 +132,16 @@ var Game = {
             this.switchTurn;
         }
         return match;
+    },
+
+    playerMatches: function(player) {
+        var count = 0
+        Space.all.forEach(function(space) {
+            if( space.owned === player) {
+                count += 1
+            }
+        })
+        return count/2
     },
 
     allSpacesOwned: function() {
@@ -176,21 +194,22 @@ $(document).ready(function() {
         var playerOne = $("input#player1").val();
         var playerTwo = $("input#player2").val();
         var dimension = $("input#dimension-number").val();
-        currentGame = Game.create(dimension, playerOne, playerTwo)
+        currentGame = Game.create(2, playerOne, playerTwo)
         currentGame.whoStarts();
         $("#current-player").show();
         $("#player-name").append("<p>"+ currentGame.whoseTurn + "</p>")
         $("#player-name").show();
+        $(".players").show();
         $("form#new-game-form").hide();
         $("button#end-game").show();
-        $("#player1-name").append("<p>"+playerOne+"</p>")
-        $("#player2-name").append("<p>"+playerTwo+"</p>")
+        $("#player1-name").append("<p>"+currentGame.playerOne+"</p>")
+        $("#player2-name").append("<p>"+currentGame.playerTwo+"</p>")
         $("button#end-game").show();2
-        for (var i=0; i < (dimension); i ++) {
+        for (var i=0; i < (2); i ++) {
            $("table#game-board").append("<tr></tr>")
-            for ( var j=0; j< (dimension); j++){
-                var id = currentGame.board.spaces[(i*dimension) + j].spaceId
-                var url = currentGame.board.spaces[(i*dimension) + j].url
+            for ( var j=0; j< (2); j++){
+                var id = currentGame.board.spaces[(i*2) + j].spaceId
+                var url = currentGame.board.spaces[(i*2) + j].url
                 $("tr").last().append("<td id = '" + id.toString() + "' class='card-back'></td>")
                 $("table#game-board td").last().bind('click', makeMove);
             }
@@ -241,6 +260,11 @@ $(document).ready(function() {
     function matchFound(card) {
         $(card).attr('id', 'owned')
         $(tempCard).attr('id', 'owned')
+        if(currentGame.whoseTurn === currentGame.playerOne) {
+            $("#player1-matches").text("MATCHES: " + currentGame.playerMatches(currentGame.whoseTurn));
+        } else {
+            $("#player2-matches").text("MATCHES: " + currentGame.playerMatches(currentGame.whoseTurn));
+        }
         setTimeout(function() {
         $("td").bind('click', makeMove)
         tryForWinner();

@@ -30,6 +30,19 @@ h3#no-match{
     display:none;
     color: #F2304A;
     text-align: center;
+    font-size: 45px;
+}
+
+.players {
+    display: none;
+}
+
+.player-names {
+    font-size: 35px;
+}
+
+.matches {
+    font-size: 20px;
 }
 
 
@@ -39,7 +52,7 @@ button {
 }
 
 .card-back {
-    background-image: url('pattern8-pattern-76a.png');
+    background-image: url('pattern.jpg');
     background-size: cover;
     opacity: 0.8;
 
@@ -68,8 +81,6 @@ td {
   height: 150px;
   width: 125px;
   border: 10px solid rgba(131,139,131,0.7);
-
-/*  opacity: 0.5;*/
   list-style-position: absolute;
 }
 
@@ -91,7 +102,6 @@ td {
 }
 
 p {
-    font-size: 45px;
     font-weight: bold;
 }
 
@@ -113,4 +123,5 @@ h1 {
    color: #F2304A;
    font-size: 75px;
 }
+
 

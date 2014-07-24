@@ -57,8 +57,8 @@ describe("Board", function(){
             var testBoard = Board.create(2)
             testBoard.buildSpaces();
             testBoard.spaces[0].spaceId.should.equal(1)
-            testBoard.spaces[0].spaceValue.should.equal('A')
-            testBoard.spaces[1].spaceValue.should.equal('A')
+            testBoard.spaces[0].spaceValue.should.equal('images/ballon.jpg')
+            testBoard.spaces[1].spaceValue.should.equal('images/ballon.jpg')
             testBoard.spaces[1].spaceId.should.equal(2)
             testBoard.spaces.length.should.equal(4)
         })
@@ -136,5 +136,11 @@ describe("Game", function() {
             testGame.winner.should.equal("Cats Game")
 
         })
+    })
+    describe("playerMatches", function() {
+        var testGame = Game.create(2, "Tanya", "Steve");
+        Space.all[0].matched('Tanya');
+        Space.all.matched('Tanya');
+        testGame.playerMatches("Tanya").should.equal(1)
     })
 })

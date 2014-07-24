@@ -14,7 +14,9 @@
         <hr>
         <div class='row'>
             <div class='col-md-2 new-game'>
-                <h4 id="game-between" style="bold">PLAYERS:<hr></h4>
+                <div id="game-between">
+                <h4>PLAYERS:<hr></h4>
+                </div>
                 <button id="new-game-button" class="btn btn-primary">Start a New Game</button>
                 <form role="form" id="new-game-form">
                     <div class="form-group">
@@ -28,9 +30,11 @@
                     </div>
                     <button type="submit" class="btn btn-primary" id="submit-names">Start Game</button>
                 </form>
-                <div id="player1-name">
-                </div>
-                <div id="player2-name">
+                <div class="players">
+                    <p id="player1-name" class="player-names"></p>
+                    <p id="player1-matches" class="matches">MATCHES:</p>
+                    <p id="player2-name" class="player-names"></p>
+                    <p id="player2-matches" class="matches">MATCHES</p>
                 </div>
                 <button id="end-game" class="btn btn-primary">End Game</button>
             </div>
