@@ -32,6 +32,8 @@ h3#no-match{
     text-align: center;
 }
 
+
+
 button {
     margin: 10px;
 }
@@ -39,10 +41,15 @@ button {
 .card-back {
     background-image: url('pattern8-pattern-76a.png');
     background-size: cover;
+    opacity: 0.8;
 
 }
+
+.btn {
+    font-size: 25px;
+}
 body {
-    color: #6699FF;;
+    color: #6699FF;
     font-family: 'Rokkitt' serif;
     background-image: url("escheresque_ste_@2X.png");
     background-attachment:fixed;
@@ -50,7 +57,6 @@ body {
 
 table {
     position: center;
-    /*border: 11px solid #ACACAC;*/
     text-align: center;
     margin-bottom: 25px;
     margin-top: 100px;
@@ -61,7 +67,9 @@ table {
 td {
   height: 150px;
   width: 125px;
-  border: 10px solid #484848;
+  border: 10px solid rgba(131,139,131,0.7);
+
+/*  opacity: 0.5;*/
   list-style-position: absolute;
 }
 
@@ -72,6 +80,7 @@ td {
 
 .no-background {
     background-color: #484848;
+    opacity: 0.7;
 }
 
 .match-header {
@@ -82,8 +91,8 @@ td {
 }
 
 p {
-    font-size: 35px;
-    font-style: bold;
+    font-size: 45px;
+    font-weight: bold;
 }
 
 h4 {

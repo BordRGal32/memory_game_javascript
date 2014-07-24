@@ -14,7 +14,7 @@
         <hr>
         <div class='row'>
             <div class='col-md-2 new-game'>
-                <h4 id="game-between" style="bold">Players:<hr></h4>
+                <h4 id="game-between" style="bold">PLAYERS:<hr></h4>
                 <button id="new-game-button" class="btn btn-primary">Start a New Game</button>
                 <form role="form" id="new-game-form">
                     <div class="form-group">
@@ -24,9 +24,9 @@
                         <input type="text" class="form-control" id="player2" placeholder="Player Two">
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" id="dimension-number" placeholder = "value must be under 6">
+                        <input type="hidden" class="form-control" id="dimension-number" value='6'>
                     </div>
-                    <button type="submit" class="btn btn-info" id="submit-names">Start Game</button>
+                    <button type="submit" class="btn btn-primary" id="submit-names">Start Game</button>
                 </form>
                 <div id="player1-name">
                 </div>

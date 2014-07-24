@@ -243,8 +243,9 @@ $(document).ready(function() {
         $(tempCard).attr('id', 'owned')
         setTimeout(function() {
         $("td").bind('click', makeMove)
-    }, 3000)
         tryForWinner();
+    }, 3000)
+
     }
 
     function tryForWinner() {
