@@ -211,8 +211,8 @@ $(document).ready(function() {
     $("form#new-game-form").submit(function(event) {
         var playerOne = $("input#player1").val();
         var playerTwo = $("input#player2").val();
-        var dimension = $("input#dimension-number").val();
-        currentGame = Game.create(2, playerOne, playerTwo)
+        var dimension = parseInt($("input#dimension-number").val());
+        currentGame = Game.create(dimension, playerOne, playerTwo)
         currentGame.whoStarts();
         $("#current-player").show();
         $("#player-name").append("<p>"+ currentGame.whoseTurn + "</p>")
@@ -227,11 +227,11 @@ $(document).ready(function() {
         $("button#end-game").show();
         $("table").show();
         $(".match-header").show();
-        for (var i=0; i < (2); i ++) {
+        for (var i=0; i < (dimension); i ++) {
            $("table").append("<tr></tr>")
-            for ( var j=0; j< (2); j++){
-                var id = currentGame.board.spaces[(i*2) + j].spaceId
-                var url = currentGame.board.spaces[(i*2) + j].url
+            for ( var j=0; j< (dimension); j++){
+                var id = currentGame.board.spaces[(i*dimension) + j].spaceId
+                var url = currentGame.board.spaces[(i*dimension) + j].url
                 $("tr").last().append("<td id = '" + id.toString() + "' class='card-back'></td>")
                 $("table td").last().bind('click', makeMove);
             }
