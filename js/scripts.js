@@ -169,6 +169,7 @@ $(document).ready(function() {
         $("button#new-game-button").hide();
         $("form#new-game-form").show();
         $("#game-between").show();
+
     });
 
     $("form#new-game-form").submit(function(event) {
@@ -191,40 +192,45 @@ $(document).ready(function() {
                 var id = currentGame.board.spaces[(i*dimension) + j].spaceId
                 var url = currentGame.board.spaces[(i*dimension) + j].url
                 $("tr").last().append("<td id = '" + id.toString() + "' class='card-back'></td>")
-                $("table#game-board td").last().click(makeMove);
+                $("table#game-board td").last().bind('click', makeMove);
             }
         }
         event.preventDefault();
     });
 
     function makeMove() {
-        var card = this
         var spaceId = this.id
-        var value = Space.find(parseInt(spaceId)).url;
-        $(card).append("<img id='card-image' src= '"+ value +"' >");
-        $(card).attr('class', 'no-background')
-        if(tempSpace === "empty" ) {
-            tempSpace = spaceId
-            tempCard = card
-        } else {
-            if(currentGame.isMatch(parseInt(tempSpace), parseInt(spaceId))) {
-                $("h3#match").show(1).delay(3000).hide(1);
-                matchFound(card)
-            } else {
-                $("h3#no-match").show(1).delay(3000).hide(1);
-                flipCards(card);
-                currentGame.switchTurn();
-                $("#player-name").hide(1).delay(3000).show(1);
-                $("#player-name p").replaceWith("<p>"+ currentGame.whoseTurn + "</p>")
-            }
-        tempSpace = "empty"
-        }
+        if (this.id != 'owned') {
+            console.log(Space.find(parseInt(spaceId)))
+            var card = this
+            var value = Space.find(parseInt(spaceId)).url;
 
+            $(card).append("<img id='card-image' src= '"+ value +"' >");
+            $(card).attr('class', 'no-background')
+            if(tempSpace === "empty" ) {
+                tempSpace = spaceId
+                tempCard = card
+            } else {
+                $("table#game-board td").unbind('click')
+                if(currentGame.isMatch(parseInt(tempSpace), parseInt(spaceId))) {
+                    $("h3#match").show(1).delay(3000).hide(1);
+                    matchFound(card)
+                } else {
+                    $("h3#no-match").show(1).delay(3000).hide(1);
+                    flipCards(card);
+                    currentGame.switchTurn();
+                    $("#player-name").hide(1).delay(3000).show(1);
+                    $("#player-name p").replaceWith("<p>"+ currentGame.whoseTurn + "</p>")
+                }
+            tempSpace = "empty"
+            }
+        }
     }
 
 
     function flipCards(card) {
          setTimeout(function() {
+            $("td").bind('click', makeMove)
             $(card).text('')
             $(card).attr('class', 'card-back')
             $(tempCard).text('')
@@ -233,8 +239,11 @@ $(document).ready(function() {
      }
 
     function matchFound(card) {
-        $(card).off("click");
-        $(tempCard).off("click");
+        $(card).attr('id', 'owned')
+        $(tempCard).attr('id', 'owned')
+        setTimeout(function() {
+        $("td").bind('click', makeMove)
+    }, 3000)
         tryForWinner();
     }
 
